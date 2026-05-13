@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bankrate — Lifecycle Marketing | Brittany Blackmon</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#05111f;color:#f0f4ff;font-family:'Inter',system-ui,sans-serif;overflow:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:#0a1e32;}
+::-webkit-scrollbar-thumb{background:#1a3a5c;border-radius:2px;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState} = React;
+const C = {bg:"#05111f",card:"#0a1e32",cardAlt:"#0f2540",accent:"#1a6bcc",accentLight:"#3d8ef0",text:"#f0f4ff",muted:"#6e96c0",border:"#163354",success:"#22c55e",warning:"#f59e0b",danger:"#ef4444",purple:"#7c3aed",teal:"#0891b2",green:"#059669"};
+
+const slides = [
+  {id:1,section:null,type:"cover"},
+  {id:2,section:"context",type:"approach"},
+  {id:3,section:"context",type:"noticed"},
+  {id:4,section:"diagnosis",type:"state"},
+  {id:5,section:"strategy",type:"hypotheses"},
+  {id:6,section:"discovery",type:"questions"},
+  {id:7,section:"strategy",type:"priorities"},
+  {id:8,section:"strategy",type:"guardrails"},
+  {id:9,section:"strategy",type:"ecosystem"},
+  {id:10,section:"part1",type:"journey"},
+  {id:11,section:"part2",type:"experiment"},
+  {id:12,section:"part3",type:"attribution"},
+  {id:13,section:"bigbet",type:"bigbet"},
+  {id:14,section:"measurement",type:"kpis"},
+  {id:15,section:"execution",type:"roadmap"},
+];
+
+const SLABELS = {context:"Context",diagnosis:"Diagnosis",discovery:"Discovery",strategy:"Strategy",part1:"Part 1",part2:"Part 2",part3:"Part 3",bigbet:"Big Bet",measurement:"Measurement",execution:"Execution"};
+const SCOLORS = {context:C.accent,diagnosis:C.warning,discovery:C.teal,strategy:C.purple,part1:C.accent,part2:C.teal,part3:C.green,bigbet:C.accentLight,measurement:C.purple,execution:C.accent};
+
+const Card = ({children,accent,style={}}) => <div style={{background:C.card,border:`1px solid ${accent||C.border}`,borderRadius:10,padding:14,borderLeft:accent?`3px solid ${accent}`:undefined,...style}}>{children}</div>;
+const H = ({children,size=26}) => <h2 style={{fontSize:size,fontWeight:800,letterSpacing:-0.5,marginBottom:18,lineHeight:1.2}}>{children}</h2>;
+const Lbl = ({children,color}) => <div style={{fontSize:10,fontWeight:800,letterSpacing:2,textTransform:"uppercase",color:color||C.accentLight,marginBottom:8}}>{children}</div>;
+
+function Cover() {
+  return <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100%",textAlign:"center"}}>
+    <div style={{fontSize:10,letterSpacing:3,color:C.accentLight,fontWeight:800,textTransform:"uppercase",marginBottom:16}}>Senior Lifecycle Marketing Take-Home</div>
+    <h1 style={{fontSize:56,fontWeight:900,letterSpacing:-3,margin:"0 0 10px",background:`linear-gradient(135deg,#fff 30%,${C.accentLight})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",lineHeight:1}}>Bankrate</h1>
+    <p style={{fontSize:17,color:C.muted,maxWidth:460,marginBottom:36,lineHeight:1.5}}>Rebuilding Lifecycle Marketing from Scratch</p>
+    <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"18px 40px"}}>
+      <div style={{fontSize:16,fontWeight:700}}>Brittany Blackmon</div>
+      <div style={{fontSize:12,color:C.muted,marginTop:4}}>Senior Lifecycle Marketing Manager Candidate</div>
+    </div>
+  </div>;
+}
+
+function Approach() {
+  const pts = ["Lifecycle marketing only works when it is built around behavior, not assumptions.","In financial services, trust is the product. A member who feels misled or overwhelmed opts out and does not come back.","I measure what I cause, not just what happens. Holdout groups are non-negotiable. Platform reporting is a starting point, not a source of truth."];
+  return <div>
+    <H>My Approach</H>
+    <div style={{display:"flex",flexDirection:"column",gap:14}}>
+      {pts.map((p,i)=><Card key={i} style={{display:"flex",gap:14,alignItems:"flex-start"}}>
+        <div style={{width:30,height:30,borderRadius:"50%",background:`linear-gradient(135deg,${C.accent},${C.accentLight})`,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,flexShrink:0}}>{i+1}</div>
+        <p style={{margin:0,fontSize:15,lineHeight:1.7}}>{p}</p>
+      </Card>)}
+    </div>
+  </div>;
+}
+
+function Noticed() {
+  const web = ["Form flow is clean through ZIP code, home type, loan purpose, purchase price, down payment, and credit score. Low friction until the offers page.","Three lender matches surfaced with star ratings — the only trust signal Bankrate provides before asking for a commitment.","The consent language beneath Continue is a real friction point. Clicking through means agreeing to auto-dialed calls and texts from lenders, even on the Do Not Call list.","Clicking Continue is not browsing. It is a commitment to enter a lender sales process.","If email is only captured at the Continue step, members who dropped off before clicking are unreachable through lifecycle entirely."];
+  const emails = ["Received two emails from Bankrate immediately after completing the form. Both landed in promotions. The lender's email landed in primary.","Both Bankrate emails were generic with no personalized rate, APR, or monthly payment. The second email had no connection to the mortgage comparison at all.","Heavy HTML templates and a product navigation grid are why Bankrate routes to promotions. The lender's broken-image email landed in primary because it contained personalized transactional data."];
+  return <div>
+    <H>What I Noticed After Digging In</H>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+      <div>
+        <Lbl color={C.accentLight}>From the Website</Lbl>
+        <div style={{display:"flex",flexDirection:"column",gap:7}}>
+          {web.map((p,i)=><Card key={i} style={{padding:"9px 13px",fontSize:12,lineHeight:1.5}}><span style={{color:C.accentLight,fontWeight:700,marginRight:6}}>+</span>{p}</Card>)}
+        </div>
+      </div>
+      <div>
+        <Lbl color={C.warning}>From the Emails</Lbl>
+        <div style={{display:"flex",flexDirection:"column",gap:7}}>
+          {emails.map((p,i)=><Card key={i} style={{padding:"9px 13px",fontSize:12,lineHeight:1.5,borderLeft:`3px solid ${C.warning}`,background:"rgba(245,158,11,0.05)"}}><span style={{color:C.warning,fontWeight:700,marginRight:6}}>+</span>{p}</Card>)}
+          <Card style={{background:"rgba(26,107,204,0.08)",border:`1px solid ${C.accent}`,padding:"10px 13px",marginTop:4}}>
+            <div style={{fontSize:11,fontWeight:700,color:C.accent,marginBottom:4}}>Key Insight</div>
+            <p style={{margin:0,fontSize:12,lineHeight:1.5}}>Bankrate triggers on lead type. The lender triggers on behavior. That is the difference between promotions and primary inbox.</p>
+          </Card>
+        </div>
+      </div>
+    </div>
+  </div>;
+}
+
+function State() {
+  const pts = [{n:"01",t:"Two triggered sends exist but fire on lead type, not behavior. A list of millions has been batch-blasted to the point of more unsubscribes than clicks last month."},{n:"02",t:"No segmentation, no personalization, no experimentation framework, no internal lifecycle ownership. One part-time agency resource manages sends."},{n:"03",t:"Bankrate knows a member is seeking mortgage rates but does not use what it knows about what they did, saw, or selected. Triggering on lead type produces generic sends."},{n:"04",t:"List health is the most urgent foundational issue. Batch-blast history has degraded sender reputation, inbox placement, and subscriber trust."},{n:"05",t:"After a member selects a lender, Bankrate exits the experience entirely. The most valuable window in the member journey is completely unaddressed."}];
+  return <div>
+    <H>The State of the Program</H>
+    <div style={{display:"flex",flexDirection:"column",gap:10}}>
+      {pts.map((p,i)=><Card key={i} style={{display:"flex",gap:14,alignItems:"flex-start",borderLeft:`3px solid ${C.warning}`,background:"rgba(245,158,11,0.04)"}}>
+        <div style={{fontSize:18,fontWeight:900,color:C.warning,opacity:0.4,flexShrink:0,width:28}}>{p.n}</div>
+        <p style={{margin:0,fontSize:13,lineHeight:1.6}}>{p.t}</p>
+      </Card>)}
+    </div>
+  </div>;
+}
+
+function Hypotheses() {
+  const items = [
+    {sc:"S1",lb:"Re-engagement",color:C.accent,t:"Email may only be captured at lender selection. Members who dropped off before that step are unreachable. Solving email capture is the prerequisite to any re-engagement program."},
+    {sc:"S1",lb:"Re-engagement",color:C.accent,t:"Members who dropped off because of consent language need objection removal. Members who dropped off from distraction need urgency. One journey cannot serve both."},
+    {sc:"S1",lb:"Re-engagement",color:C.accent,t:"Members with credit score above 720, loan above $350K, and over two minutes on the offers page are the highest-propensity segment and should be targeted first."},
+    {sc:"S2",lb:"Experimentation",color:C.purple,t:"The real estate agent email firing four minutes post-submission is contributing to unsubscribes on an already damaged list. Re-sequencing it is the first fix before any new sends launch."},
+    {sc:"S3",lb:"Attribution",color:C.teal,t:"Iterable will over-report conversions. Until a 10% holdout is established before the first send, no conversion number can be separated from organic behavior."}
+  ];
+  return <div>
+    <H>My Hypotheses</H>
+    <div style={{display:"flex",flexDirection:"column",gap:9}}>
+      {items.map((item,i)=><Card key={i} style={{display:"flex",gap:14,alignItems:"flex-start",borderLeft:`3px solid ${item.color}`}}>
+        <div style={{flexShrink:0,textAlign:"center",minWidth:44}}>
+          <div style={{width:28,height:28,borderRadius:"50%",background:item.color,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:800,margin:"0 auto 4px"}}>{i+1}</div>
+          <div style={{fontSize:8,fontWeight:800,color:item.color,letterSpacing:0.5,textTransform:"uppercase",lineHeight:1.2}}>{item.lb}</div>
+        </div>
+        <p style={{margin:0,fontSize:12.5,lineHeight:1.6}}>{item.t}</p>
+      </Card>)}
+    </div>
+  </div>;
+}
+
+function Questions() {
+  const qs = [
+    {q:"At what point is email captured — before or after the member sees lender offers?",w:"If only captured at lender selection, drop-offs who left before that step are unreachable. This changes the entire size and strategy of the re-engagement pool."},
+    {q:"What percentage of form submitters select a lender versus leave without selecting?",w:"Defines the scale of the drop-off problem and whether it is getting worse, which determines urgency."},
+    {q:"What is the breakdown of members by loan purpose, buyer type, and loan size?",w:"A first-time buyer on a $300K purchase and someone refinancing a $700K home require completely different messages."},
+    {q:"How long does the average member spend on the offers page before leaving?",w:"Under 30 seconds signals distraction. Over two minutes signals they read the consent language and backed out. Two different causes require two different approaches."},
+    {q:"Where did the millions of email addresses come from — mortgage flow or across all products?",w:"If a large portion came from credit cards or personal loans, mortgage re-engagement messaging will feel irrelevant and accelerate unsubscribes."},
+    {q:"What events and attributes exist in Iterable, and can form-submission data be passed in?",w:"Without loan_type, credit_score_range, and home_price as member attributes, the journey cannot be personalized regardless of how strong the strategy is."},
+    {q:"Why is the real estate agent email triggering four minutes after the confirmation?",w:"Discovered during my personal site audit. This is either intentional with no sequencing logic, or a gap no one has addressed. Either way it is contributing to unsubscribes."},
+    {q:"Where does Bankrate's communication fall off once a member has spoken to a lender?",w:"If Bankrate stops sending entirely after the transaction, that is a significant long-term retention gap. A converted member is the warmest contact for future products."}
+  ];
+  return <div>
+    <H>Questions That Would Inform My Approach</H>
+    <p style={{fontSize:12,color:C.muted,marginBottom:14,fontStyle:"italic"}}>I do not build in a vacuum. Every question below directly changes a strategic or technical decision.</p>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9}}>
+      {qs.map((item,i)=><Card key={i} style={{padding:"10px 13px"}}>
+        <div style={{fontSize:12,fontWeight:700,marginBottom:5,lineHeight:1.4}}>{i+1}. {item.q}</div>
+        <div style={{fontSize:11,color:C.muted,lineHeight:1.5}}>{item.w}</div>
+      </Card>)}
+    </div>
+  </div>;
+}
+
+function Priorities() {
+  const ps = [{n:"1",color:C.accent,title:"High-Intent Recent Drop-Offs",desc:"Completed full form, saw offers, left without selecting within last 24 hours. Gave Bankrate their full financial profile. Proof of concept starts here."},{n:"2",color:C.teal,title:"Return Visitors",desc:"Came back a second time or more but still have not selected a lender. Higher intent signal. Messaging acknowledges their return."},{n:"3",color:C.purple,title:"ML High-Propensity Members",desc:"Longer time on offers page, multiple lenders reviewed, higher credit score and loan amount. Propensity model built on behavioral signals. Condensed journey, faster timing."},{n:"4",color:C.green,title:"On-the-Fence Members",desc:"Lower propensity score but site activity within last seven days. Test lower-commitment value exchange. RESPA compliance review required."}];
+  return <div>
+    <H>Who I Would Target First and Why</H>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
+      {ps.map((p,i)=><Card key={i} style={{borderLeft:`3px solid ${p.color}`}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
+          <div style={{width:28,height:28,borderRadius:"50%",background:p.color,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:800,flexShrink:0}}>{p.n}</div>
+          <div style={{fontSize:13,fontWeight:700}}>{p.title}</div>
+        </div>
+        <p style={{margin:0,fontSize:12,lineHeight:1.5,color:C.muted}}>{p.desc}</p>
+      </Card>)}
+    </div>
+    <Card style={{borderLeft:`3px solid ${C.danger}`,background:"rgba(239,68,68,0.04)",padding:"10px 14px"}}>
+      <span style={{fontSize:11,fontWeight:800,color:C.danger,marginRight:8,textTransform:"uppercase",letterSpacing:1}}>Exclude:</span>
+      <span style={{fontSize:12,color:C.muted}}>Selected a lender in last 30 days -- inactive 60-plus days -- unsubscribed or hard bounced -- non-mortgage visitors who have not visited the mortgage section</span>
+    </Card>
+  </div>;
+}
+
+function Guardrails() {
+  const items = [{title:"Unsubscribe rate",color:C.warning,desc:"Spike after any step means the message is out of context for that segment. Isolate which step, which audience, and adjust before continuing the send."},{title:"Inbox placement rate",color:C.accent,desc:"Drop in primary inbox routing reduces open rate and click rate on every send that follows. Monitor per send, not per campaign."},{title:"Spam complaint rate",color:C.danger,desc:"Any spike gets investigated immediately. Gmail and Outlook factor complaint rate directly into domain reputation scoring."},{title:"Lender quality signals",color:C.teal,desc:"Are lifecycle-converted members engaging with lenders or going silent post-contact? Low engagement signals the journey is optimizing for clicks, not qualified intent."},{title:"Compliance",color:C.purple,desc:"All mortgage lifecycle communications reviewed by legal against RESPA, TILA, and CAN-SPAM before any send goes live."}];
+  return <div>
+    <H>Guardrails</H>
+    <p style={{fontSize:12,color:C.muted,marginBottom:16,fontStyle:"italic"}}>These are the signals that tell me something is wrong before it becomes a program-level problem.</p>
+    <div style={{display:"flex",flexDirection:"column",gap:12}}>
+      {items.map((item,i)=><Card key={i} style={{display:"flex",gap:16,alignItems:"flex-start",borderLeft:`3px solid ${item.color}`}}>
+        <div style={{flexShrink:0,minWidth:160}}><div style={{fontSize:12,fontWeight:800,color:item.color}}>{item.title}</div></div>
+        <p style={{margin:0,fontSize:13,lineHeight:1.6}}>{item.desc}</p>
+      </Card>)}
+    </div>
+  </div>;
+}
+
+function Ecosystem() {
+  const stages = [{name:"Pre-Submission",color:C.accent,items:["Browse abandonment (visit, no form start within 15 min)","Rate alert nurture with cross-sell to build brand familiarity","Lead capture nurture via mid-form save and exit intent modal"]},{name:"Post-Submission",color:C.teal,items:["High-intent drop-off re-engagement (Part 1)","Pre-lender contact nurture with personalized content blocks","Post-lender-selection bridge email with actual rate and APR","Lender non-response (72 hours, no lender contact)"]},{name:"Active Pipeline",color:C.purple,items:["Rate movement alerts tied to member loan profile","Cross-product behavior triggers replacing batch sends","Multi-lender awareness for non-selected lenders"]},{name:"Win-Back and Long-Term",color:C.green,items:["30/60/90-day win-back program","Rate alert subscription as re-entry point","12-month refinance consideration trigger","Referral program (pending compliance review)"]}];
+  return <div>
+    <H>Lifecycle Journey Ecosystem</H>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+      {stages.map((s,i)=><Card key={i} style={{borderTop:`3px solid ${s.color}`}}>
+        <Lbl color={s.color}>{s.name}</Lbl>
+        <div style={{display:"flex",flexDirection:"column",gap:6}}>
+          {s.items.map((item,k)=><div key={k} style={{fontSize:12,display:"flex",gap:8,lineHeight:1.4}}><span style={{color:s.color,flexShrink:0,fontWeight:700}}>+</span>{item}</div>)}
+        </div>
+      </Card>)}
+    </div>
+  </div>;
+}
+
+function Journey() {
+  const steps = [{s:"1",t:"1 hour",ch:"Email",p:"Surface rate, APR, monthly payment. Low-pressure return CTA."},{s:"2",t:"Day 1",ch:"Email",p:"Educate on evaluating lenders. Bankrate as consumer advocate."},{s:"3",t:"Day 3",ch:"Email",p:"Rate movement alert. Genuine urgency."},{s:"4",t:"Day 5",ch:"Email",p:"Address consent hesitation. Clicking through is a conversation, not a commitment."},{s:"5",t:"Day 7",ch:"SMS or Email",p:"Short direct close. Direct link. Zero friction."},{s:"14",t:"Day 14",ch:"Email",p:"Rate alert subscription offer for zero-engagement members only."}];
+  const branching = ["After every step: lender selected? Exit as converted. No? Continue.","After Step 1: opened but no click? Route Step 2 toward education via Yes/No split on email_open event.","Zero opens and clicks across Steps 1 to 3: route to Day 14 only.","Priority 3 high-propensity members: Steps 1 and 2 within 6 hours, not 24."];
+  return <div>
+    <H>Part 1: Journey Architecture</H>
+    <Card style={{marginBottom:12,padding:"9px 13px",background:C.cardAlt}}>
+      <span style={{fontSize:10,fontWeight:800,color:C.accent,letterSpacing:1.5,textTransform:"uppercase",marginRight:8}}>Entry Trigger:</span>
+      <code style={{fontSize:11,color:C.accentLight}}>`rate_comparison_completed = true` AND no `lender_selected` within 30 min</code>
+    </Card>
+    <div style={{overflowX:"auto",marginBottom:12}}>
+      <table style={{width:"100%",fontSize:12}}>
+        <thead><tr style={{borderBottom:`1px solid ${C.border}`}}>{["Step","Timing","Channel","Purpose"].map(h=><th key={h} style={{padding:"7px 10px",textAlign:"left",color:C.muted,fontSize:10,fontWeight:800,textTransform:"uppercase",letterSpacing:1}}>{h}</th>)}</tr></thead>
+        <tbody>{steps.map((st,i)=><tr key={i} style={{borderBottom:`1px solid ${C.border}`,background:i%2===0?"transparent":C.card}}>
+          <td style={{padding:"7px 10px",color:C.accentLight,fontWeight:800}}>{st.s}</td>
+          <td style={{padding:"7px 10px",color:C.muted,whiteSpace:"nowrap"}}>{st.t}</td>
+          <td style={{padding:"7px 10px"}}>{st.ch}</td>
+          <td style={{padding:"7px 10px",lineHeight:1.4}}>{st.p}</td>
+        </tr>)}</tbody>
+      </table>
+    </div>
+    <Lbl color={C.accent}>Branching Logic</Lbl>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7}}>
+      {branching.map((b,i)=><div key={i} style={{fontSize:11,color:C.muted,display:"flex",gap:7,lineHeight:1.4}}><span style={{color:C.accent,flexShrink:0}}>--</span>{b}</div>)}
+    </div>
+  </div>;
+}
+
+function Experiment() {
+  const rules = [{o:"Treatment wins",a:"Roll to 100% of journey entrants. Apply personalization to Steps 2 through 5. Queue next test."},{o:"Control wins or flat",a:"Move to next variable: timing, subject line, or post-click landing page."},{o:"Inconclusive at 30 days",a:"Call it a draw. Document and move on."}];
+  return <div>
+    <H>Part 2: Experimentation Design</H>
+    <Card accent={C.accent} style={{marginBottom:12}}>
+      <Lbl color={C.accent}>Hypothesis</Lbl>
+      <p style={{margin:0,fontSize:13,lineHeight:1.6}}>Members who receive a re-engagement email surfacing their specific rate, APR, and monthly payment will convert to lender selection at a higher rate than members who receive a generic offer reminder.</p>
+    </Card>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
+      <Card><Lbl color={C.muted}>Control</Lbl><p style={{margin:0,fontSize:12,lineHeight:1.5,color:C.muted}}>General offer description.<br/><strong style={{color:C.text}}>CTA:</strong> "View your personalized rate offers."</p></Card>
+      <Card accent={C.accent}><Lbl color={C.accent}>Treatment</Lbl><p style={{margin:0,fontSize:12,lineHeight:1.5}}>Best match surfaced: rate, APR, loan type, monthly payment.<br/><strong>CTA:</strong> "Your top match: 5.99% APR. See all [X] offers."</p></Card>
+    </div>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
+      <Card style={{background:C.cardAlt}}>
+        <Lbl color={C.accentLight}>Holdout</Lbl>
+        <p style={{margin:0,fontSize:11,color:C.muted,lineHeight:1.5}}>10% global holdout withheld from ALL journey comms across the program. Organic conversion rate is the true baseline. Applied at Chime where platform numbers consistently overstated incremental impact.</p>
+      </Card>
+      <Card style={{background:C.cardAlt}}>
+        <Lbl color={C.accentLight}>Metric and Runtime</Lbl>
+        <p style={{margin:0,fontSize:11,color:C.muted,lineHeight:1.5}}>Click-through-to-lender rate at Step 1. 95% confidence (p less than 0.05). <strong style={{color:C.text}}>30-day minimum runtime.</strong> Mortgage is a considered purchase. Behavioral patterns do not stabilize in less than 30 days.</p>
+      </Card>
+    </div>
+    <Lbl color={C.accent}>Decision Rule</Lbl>
+    <div style={{display:"flex",flexDirection:"column",gap:6,marginBottom:14}}>
+      {rules.map((r,i)=><div key={i} style={{display:"flex",gap:10,fontSize:12,lineHeight:1.4}}><span style={{color:C.accentLight,fontWeight:800,flexShrink:0,minWidth:160}}>{r.o}:</span><span style={{color:C.muted}}>{r.a}</span></div>)}
+    </div>
+    <Lbl color={C.muted}>Additional Experiments to Queue (all on 30-day minimum window)</Lbl>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+      {["Timing: 30 min vs. 1 hour vs. next morning for Step 1","Subject line: urgency vs. informational vs. personalized rate callout","Channel sequencing: email-only vs. email plus SMS","Propensity-based pacing: faster journey for high-propensity members","Win-back timing: Day 14 vs. Day 21 vs. Day 30","Content blocks: which lender-specific content drives highest lender conversation completion","Intelligent Timing: Iterable's send-time optimization vs. fixed send time on Step 1"].map((e,i)=>(
+        <div key={i} style={{display:"flex",gap:8,fontSize:11,color:C.muted,lineHeight:1.4}}>
+          <span style={{color:C.accent,flexShrink:0,fontWeight:700}}>+</span>{e}
+        </div>
+      ))}
+    </div>
+  </div>;
+}
+
+function Attribution() {
+  const def = ["Member was enrolled in the journey (matched in Iterable send data)","Member clicked a link in a lifecycle email. Open alone does not qualify.","Lender selection occurred within 24 hours of that email click","Member is NOT in the holdout group","One conversion counted per member per journey enrollment"];
+  const sources = [{s:"Long conversion windows",c:"24-hour window only. 7 to 30-day defaults capture organic conversions."},{s:"No holdout baseline",c:"10% global holdout established before first send."},{s:"View-through attribution",c:"Click-only qualifying touchpoints. Opens do not count."},{s:"Duplicate attribution",c:"One conversion per member per journey, not per send."},{s:"Bot traffic",c:"Click velocity and user-agent filtering before data enters the model."}];
+  const tbl = [{m:"Iterable-reported lender selections",v:"X",color:C.muted},{m:"Internally validated conversions (24-hr click window)",v:"Y",color:C.text},{m:"Holdout-validated incremental conversions",v:"Z",color:C.success}];
+  return <div>
+    <H>Part 3: Attribution Framework</H>
+    <div style={{display:"grid",gridTemplateColumns:"5fr 6fr",gap:14}}>
+      <div>
+        <Lbl color={C.accent}>Attributed Conversion -- All 5 Required</Lbl>
+        <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:14}}>
+          {def.map((d,i)=><div key={i} style={{display:"flex",gap:8,fontSize:12,lineHeight:1.4}}><span style={{color:C.success,fontWeight:800,flexShrink:0}}>{i+1}.</span><span>{d}</span></div>)}
+        </div>
+        <Lbl color={C.warning}>Over-Attribution Sources</Lbl>
+        <div style={{display:"flex",flexDirection:"column",gap:6}}>
+          {sources.map((s,i)=><div key={i} style={{fontSize:11,lineHeight:1.4}}><span style={{color:C.warning,fontWeight:700}}>{s.s}: </span><span style={{color:C.muted}}>{s.c}</span></div>)}
+        </div>
+      </div>
+      <div>
+        <Lbl color={C.muted}>Presenting to Non-Technical Stakeholders</Lbl>
+        <p style={{fontSize:12,color:C.muted,marginBottom:12,fontStyle:"italic",lineHeight:1.5}}>"Iterable tells us what happened inside the email. Our internal model tells us what the email caused to happen."</p>
+        <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10,overflow:"hidden",marginBottom:12}}>
+          {tbl.map((row,i)=><div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"12px 16px",borderBottom:i<2?`1px solid ${C.border}`:"none",background:i===2?"rgba(34,197,94,0.06)":"transparent"}}>
+            <span style={{fontSize:12,color:row.color,flex:1}}>{row.m}</span>
+            <span style={{fontSize:28,fontWeight:900,color:row.color,marginLeft:16}}>{row.v}</span>
+          </div>)}
+        </div>
+        <Card style={{background:C.cardAlt,padding:"10px 13px"}}>
+          <p style={{margin:0,fontSize:11,color:C.muted,lineHeight:1.5,fontStyle:"italic"}}>Z is the number for budget decisions. The gap between X and Z is the information needed to invest correctly.</p>
+        </Card>
+      </div>
+    </div>
+  </div>;
+}
+
+function BigBet() {
+  const fixes = ["Pull rate, APR, monthly payment, and lender name into the confirmation email body dynamically via Iterable personalization fields","Replace the product navigation grid with one CTA back to the member's saved results","Move to minimal HTML or plain text. The current template is why Bankrate lands in promotions while the lender's broken-image email lands in primary.","Move the real estate agent email to Day 3 or Day 5 of the re-engagement journey. Not four minutes after submission.","Build the events and attributes library. Without loan_type, buyer_type, credit_score_range, and home_price as member attributes in Iterable, every message is generic by default.","Own the window between lender selection and first lender contact. Use content blocks personalized to the selected lender AND the lenders the member viewed but did not choose."];
+  return <div>
+    <H>The Big Bet: Transform What Exists</H>
+    <Card style={{marginBottom:16,background:"rgba(26,107,204,0.08)",border:`1px solid ${C.accent}`,padding:"14px 16px"}}>
+      <p style={{margin:0,fontSize:14,lineHeight:1.7,fontStyle:"italic"}}>The 9:14 PM confirmation email has the right instinct. Wrong execution. The fix is not to build something new. It is to transform what already exists.</p>
+    </Card>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9}}>
+      {fixes.map((f,i)=><Card key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"11px 13px"}}>
+        <div style={{width:22,height:22,borderRadius:"50%",background:`linear-gradient(135deg,${C.accent},${C.accentLight})`,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:800,flexShrink:0}}>{i+1}</div>
+        <p style={{margin:0,fontSize:12,lineHeight:1.5}}>{f}</p>
+      </Card>)}
+    </div>
+  </div>;
+}
+
+function KPIs() {
+  const stages = [{name:"Stage 1: No Email Captured Yet",color:C.accent,kpis:[{p:"Primary",m:"Rate alert sign-up rate from site visitors who do not submit the mortgage form"},{p:"Primary",m:"Email capture rate from exit intent modal and mid-form save prompt"},{p:"Secondary",m:"Rate alert nurture open rate, click rate, and cross-sell conversion rate"},{p:"Tertiary",m:"Time from rate alert sign-up to mortgage form submission"}]},{name:"Stage 2: Email Captured, Pre-Application",color:C.teal,kpis:[{p:"Primary",m:"Incremental lender selection rate vs. holdout"},{p:"Primary",m:"Click-through-to-lender rate by journey step"},{p:"Secondary",m:"Inbox placement rate: primary vs. promotions per send"},{p:"Secondary",m:"Unsubscribe rate by journey step"},{p:"Tertiary",m:"Application start rate (requires lender data sharing)"}]},{name:"Stage 3: Post-Application and Long-Term",color:C.green,kpis:[{p:"Primary",m:"Win-back rate for members inactive 60-plus days"},{p:"Primary",m:"Re-engagement rate for post-lender-conversation members"},{p:"Secondary",m:"Cross-sell conversion rate post-mortgage"},{p:"Tertiary",m:"Member still engaging with Bankrate 6 to 12 months post-conversion"}]}];
+  const cadence = [{t:"24 hours",f:"Delivery, opens, early clicks, entry volume"},{t:"3 days",f:"Lender selection, cross-sell conversions, unsubscribes"},{t:"7 days",f:"Full CTR by step, holdout baseline check"},{t:"30 days",f:"Incrementality vs. holdout, cross-reference internal data"},{t:"Monthly",f:"Downstream conversion, propensity model, win-back"}];
+  const pc = {Primary:C.accent,Secondary:C.teal,Tertiary:C.muted};
+  return <div>
+    <H>How I Would Measure Success</H>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:14}}>
+      {stages.map((s,i)=><Card key={i} style={{borderTop:`3px solid ${s.color}`,padding:"12px"}}>
+        <Lbl color={s.color}>{s.name}</Lbl>
+        <div style={{display:"flex",flexDirection:"column",gap:6}}>
+          {s.kpis.map((k,j)=><div key={j} style={{fontSize:11,lineHeight:1.4,display:"flex",gap:6}}>
+            <span style={{color:pc[k.p]||C.muted,fontWeight:700,fontSize:9,letterSpacing:0.5,textTransform:"uppercase",flexShrink:0,paddingTop:2,minWidth:48}}>{k.p}</span>
+            <span>{k.m}</span>
+          </div>)}
+        </div>
+      </Card>)}
+    </div>
+    <Lbl color={C.muted}>Dashboard Cadence</Lbl>
+    <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:8}}>
+      {cadence.map((c,i)=><Card key={i} style={{padding:"9px 11px",textAlign:"center"}}>
+        <div style={{fontSize:11,fontWeight:800,color:C.accentLight,marginBottom:5}}>{c.t}</div>
+        <div style={{fontSize:10,color:C.muted,lineHeight:1.4}}>{c.f}</div>
+      </Card>)}
+    </div>
+  </div>;
+}
+
+function Roadmap() {
+  const phases = [{p:"Phase 1",title:"Diagnose and Clean Up",t:"Weeks 1 to 4",color:C.accent,items:["Audit email list: hard bounces, chronically disengaged contacts","Audit Iterable events and attributes. Build the library if incomplete.","Establish holdout baselines before any send launches","Suppress 60-plus-day inactive members. Build re-permission flow.","Assess sender reputation and domain health"]},{p:"Phase 2",title:"Quick Wins",t:"Weeks 5 to 12",color:C.teal,items:["Transform confirmation email: personalized rate data, remove product grid","Fix sequencing: move real estate agent content to Day 3 or Day 5","Transition non-mortgage sends from batch to behavior-triggered automations","Launch re-engagement journey for Priority 1 drop-offs","Run A/B test on personalized rate callout vs. generic CTA. 30-day window."]},{p:"Phase 3",title:"Personalization and Scale",t:"Month 3 and Beyond",color:C.purple,items:["Deploy propensity model for Priority 3 targeting with condensed journey","Expand personalization by buyer type, loan type, and credit score tier","Launch 30/60/90-day win-back program starting with rate alert as re-entry","Explore referral program viability and compliance pathway","Report Phase 1 and 2 results with attribution-validated numbers"]}];
+  return <div>
+    <H>Path Forward</H>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:14}}>
+      {phases.map((p,i)=><Card key={i} style={{borderTop:`3px solid ${p.color}`}}>
+        <div style={{fontSize:9,fontWeight:800,color:p.color,letterSpacing:2,textTransform:"uppercase",marginBottom:3}}>{p.p}</div>
+        <div style={{fontSize:15,fontWeight:800,marginBottom:2}}>{p.title}</div>
+        <div style={{fontSize:11,color:C.muted,marginBottom:14}}>{p.t}</div>
+        <div style={{display:"flex",flexDirection:"column",gap:8}}>
+          {p.items.map((item,k)=><div key={k} style={{display:"flex",gap:8,fontSize:12,lineHeight:1.4}}><span style={{color:p.color,fontWeight:800,flexShrink:0}}>+</span><span>{item}</span></div>)}
+        </div>
+      </Card>)}
+    </div>
+  </div>;
+}
+
+function App() {
+  const [cur,setCur] = useState(0);
+  const s = slides[cur];
+  const total = slides.length;
+  const prev = () => setCur(c=>Math.max(0,c-1));
+  const next = () => setCur(c=>Math.min(total-1,c+1));
+  const render = () => {
+    const t = s.type;
+    if(t==="cover") return <Cover/>;
+    if(t==="approach") return <Approach/>;
+    if(t==="noticed") return <Noticed/>;
+    if(t==="state") return <State/>;
+    if(t==="hypotheses") return <Hypotheses/>;
+    if(t==="questions") return <Questions/>;
+    if(t==="priorities") return <Priorities/>;
+    if(t==="guardrails") return <Guardrails/>;
+    if(t==="ecosystem") return <Ecosystem/>;
+    if(t==="journey") return <Journey/>;
+    if(t==="experiment") return <Experiment/>;
+    if(t==="attribution") return <Attribution/>;
+    if(t==="bigbet") return <BigBet/>;
+    if(t==="kpis") return <KPIs/>;
+    if(t==="roadmap") return <Roadmap/>;
+    return null;
+  };
+  return <div style={{background:C.bg,height:"100vh",display:"flex",flexDirection:"column"}}>
+    <div style={{height:3,background:C.card,flexShrink:0}}>
+      <div style={{height:"100%",background:`linear-gradient(90deg,${C.accent},${C.accentLight})`,width:`${((cur+1)/total)*100}%`,transition:"width 0.4s ease"}}/>
+    </div>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 24px",borderBottom:`1px solid ${C.border}`,flexShrink:0}}>
+      <div style={{fontSize:13,fontWeight:800,letterSpacing:2,color:C.accent,textTransform:"uppercase"}}>Bankrate</div>
+      {s.section && <div style={{fontSize:10,background:"rgba(26,107,204,0.1)",color:SCOLORS[s.section]||C.accentLight,padding:"3px 12px",borderRadius:20,border:`1px solid ${SCOLORS[s.section]||C.border}`,letterSpacing:1.5,textTransform:"uppercase",fontWeight:800}}>{SLABELS[s.section]}</div>}
+      <div style={{fontSize:11,color:C.muted,fontWeight:600}}>Slide {cur+1} of {total}</div>
+    </div>
+    <div style={{flex:1,overflow:"auto",padding:"20px 28px"}}>{render()}</div>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"12px 24px",borderTop:`1px solid ${C.border}`,flexShrink:0}}>
+      <button onClick={prev} disabled={cur===0} style={{background:cur===0?C.card:C.cardAlt,border:`1px solid ${C.border}`,color:cur===0?C.muted:C.text,padding:"7px 20px",borderRadius:6,cursor:cur===0?"not-allowed":"pointer",fontSize:12,fontWeight:700}}>
+        {cur===0?"--":"Previous"}
+      </button>
+      <div style={{display:"flex",gap:5,alignItems:"center"}}>
+        {slides.map((_,i)=><div key={i} onClick={()=>setCur(i)} style={{width:i===cur?18:5,height:5,borderRadius:3,background:i===cur?C.accentLight:C.border,cursor:"pointer",transition:"all 0.25s ease"}}/>)}
+      </div>
+      <button onClick={next} disabled={cur===total-1} style={{background:cur===total-1?C.card:C.accent,border:"none",color:cur===total-1?C.muted:"#fff",padding:"7px 20px",borderRadius:6,cursor:cur===total-1?"not-allowed":"pointer",fontSize:12,fontWeight:700}}>
+        {cur===total-1?"--":"Next"}
+      </button>
+    </div>
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
