@@ -25,18 +25,20 @@ const slides = [
   {id:1,section:null,type:"cover"},
   {id:2,section:"context",type:"approach"},
   {id:3,section:"context",type:"noticed"},
-  {id:4,section:"diagnosis",type:"state"},
-  {id:5,section:"strategy",type:"hypotheses"},
-  {id:6,section:"discovery",type:"questions"},
-  {id:7,section:"strategy",type:"priorities"},
-  {id:8,section:"strategy",type:"guardrails"},
-  {id:9,section:"strategy",type:"ecosystem"},
-  {id:10,section:"part1",type:"journey"},
-  {id:11,section:"part2",type:"experiment"},
-  {id:12,section:"part3",type:"attribution"},
-  {id:13,section:"bigbet",type:"bigbet"},
-  {id:14,section:"measurement",type:"kpis"},
-  {id:15,section:"execution",type:"roadmap"},
+  {id:4,section:"context",type:"validation"},
+  {id:5,section:"diagnosis",type:"state"},
+  {id:6,section:"strategy",type:"hypotheses"},
+  {id:7,section:"discovery",type:"questions"},
+  {id:8,section:"strategy",type:"priorities"},
+  {id:9,section:"strategy",type:"guardrails"},
+  {id:10,section:"strategy",type:"ecosystem"},
+  {id:11,section:"part1",type:"topoffunnel"},
+  {id:12,section:"part1",type:"journey"},
+  {id:13,section:"part2",type:"experiment"},
+  {id:14,section:"part3",type:"attribution"},
+  {id:15,section:"bigbet",type:"bigbet"},
+  {id:16,section:"measurement",type:"kpis"},
+  {id:17,section:"execution",type:"roadmap"},
 ];
 
 const SLABELS = {context:"Context",diagnosis:"Diagnosis",discovery:"Discovery",strategy:"Strategy",part1:"Part 1",part2:"Part 2",part3:"Part 3",bigbet:"Big Bet",measurement:"Measurement",execution:"Execution"};
@@ -96,6 +98,25 @@ function Noticed() {
   </div>;
 }
 
+/** Cross-checks hypotheses against live site + email behaviors before diagnosis. */
+function Validation() {
+  const rows = [
+    {check:"Consent + capture moment",finding:"Offers page friction is behavioral: members who stall on consent versus those who drop off distracted need different hypotheses—confirmed by sequencing email vs timed exit."},
+    {check:"Deliverability parity",finding:"Heavy marketing HTML vs transactional-style lender mail explains promotions vs primary—validates personalization + payload shape as hypotheses, not just copy."},
+    {check:"Email reachability gap",finding:"Capture only at Continue shrinks reachable pool versus total drop-offs—validated prerequisite for lifecycle scale before blaming journey creative."},
+  ];
+  return <div>
+    <H>Hypothesis Validation Signals</H>
+    <p style={{fontSize:12,color:C.muted,marginBottom:14,lineHeight:1.5}}>These are observable checks that either strengthen or disqualify assumptions before prescribing fixes. Slide pairs with hypotheses on capture, personalization, experimentation, and attribution.</p>
+    <div style={{display:"flex",flexDirection:"column",gap:11}}>
+      {rows.map((r,i)=><Card key={i} style={{borderLeft:`3px solid ${C.accent}`}}>
+        <div style={{fontSize:12,fontWeight:800,color:C.accent,marginBottom:6}}>{r.check}</div>
+        <p style={{margin:0,fontSize:13,lineHeight:1.6}}>{r.finding}</p>
+      </Card>)}
+    </div>
+  </div>;
+}
+
 function State() {
   const pts = [{n:"01",t:"Two triggered sends exist but fire on lead type, not behavior. A list of millions has been batch-blasted to the point of more unsubscribes than clicks last month."},{n:"02",t:"No segmentation, no personalization, no experimentation framework, no internal lifecycle ownership. One part-time agency resource manages sends."},{n:"03",t:"Bankrate knows a member is seeking mortgage rates but does not use what it knows about what they did, saw, or selected. Triggering on lead type produces generic sends."},{n:"04",t:"List health is the most urgent foundational issue. Batch-blast history has degraded sender reputation, inbox placement, and subscriber trust."},{n:"05",t:"After a member selects a lender, Bankrate exits the experience entirely. The most valuable window in the member journey is completely unaddressed."}];
   return <div>
@@ -111,11 +132,11 @@ function State() {
 
 function Hypotheses() {
   const items = [
-    {sc:"S1",lb:"Re-engagement",color:C.accent,t:"Email may only be captured at lender selection. Members who dropped off before that step are unreachable. Solving email capture is the prerequisite to any re-engagement program."},
-    {sc:"S1",lb:"Re-engagement",color:C.accent,t:"Members who dropped off because of consent language need objection removal. Members who dropped off from distraction need urgency. One journey cannot serve both."},
-    {sc:"S1",lb:"Re-engagement",color:C.accent,t:"Members with credit score above 720, loan above $350K, and over two minutes on the offers page are the highest-propensity segment and should be targeted first."},
-    {sc:"S2",lb:"Experimentation",color:C.purple,t:"The real estate agent email firing four minutes post-submission is contributing to unsubscribes on an already damaged list. Re-sequencing it is the first fix before any new sends launch."},
-    {sc:"S3",lb:"Attribution",color:C.teal,t:"Iterable will over-report conversions. Until a 10% holdout is established before the first send, no conversion number can be separated from organic behavior."}
+    {sc:"S1",lb:"Re-engagement",color:C.accent,t:"The re-engagement program cannot function if email is only captured at lender selection. Members who drop off before that step are invisible to lifecycle entirely and represent the majority of the drop-off pool. The first problem to solve is not the journey. It is the infrastructure that makes the journey possible."},
+    {sc:"S1",lb:"Re-engagement",color:C.accent,t:"The current program treats every member the same regardless of why they left, where they are in their decision, or how close they are to acting. A single batch send to millions with no segmentation has already produced more unsubscribes than clicks. Re-engagement only works when the message matches the specific reason the member dropped off."},
+    {sc:"S1",lb:"Re-engagement",color:C.accent,t:"Without any targeting logic, the program has been spending send volume on members who are not ready while missing the ones closest to converting. Starting thresholds (720 credit score, $350K loan) are directional hypotheses that must be validated against Bankrate's actual historical lender selection data with the data science team before being used as hard targeting criteria."},
+    {sc:"S2",lb:"Experimentation",color:C.purple,t:"The existing triggered sends are actively damaging the list before any new program launches. Without sequencing logic, emails fire out of context at the wrong moment on a list already degraded by batch-blast history. The first fix is not an A/B test. It is stopping the sends that are making the list worse before adding new ones."},
+    {sc:"S3",lb:"Attribution",color:C.teal,t:"Nothing in this program has ever been tested. There is no holdout baseline, no internal validation model, and no way to separate what the program causes from what would have happened organically. Until a 10% holdout is established before the first send, every number Iterable reports is a mix of lifecycle-driven and organic behavior. The program cannot prove its value without solving this first."}
   ];
   return <div>
     <H>My Hypotheses</H>
@@ -133,18 +154,18 @@ function Hypotheses() {
 
 function Questions() {
   const qs = [
-    {q:"At what point is email captured — before or after the member sees lender offers?",w:"If only captured at lender selection, drop-offs who left before that step are unreachable. This changes the entire size and strategy of the re-engagement pool."},
-    {q:"What percentage of form submitters select a lender versus leave without selecting?",w:"Defines the scale of the drop-off problem and whether it is getting worse, which determines urgency."},
-    {q:"What is the breakdown of members by loan purpose, buyer type, and loan size?",w:"A first-time buyer on a $300K purchase and someone refinancing a $700K home require completely different messages."},
-    {q:"How long does the average member spend on the offers page before leaving?",w:"Under 30 seconds signals distraction. Over two minutes signals they read the consent language and backed out. Two different causes require two different approaches."},
-    {q:"Where did the millions of email addresses come from — mortgage flow or across all products?",w:"If a large portion came from credit cards or personal loans, mortgage re-engagement messaging will feel irrelevant and accelerate unsubscribes."},
+    {q:"At what point is email captured — before or after the member sees lender offers?",w:"From my site audit, email is captured when the member selects a lender and clicks Continue. Members who dropped off before that step have no email on file and are unreachable. The re-engagement pool is significantly smaller than the full drop-off pool until this is solved."},
+    {q:"What percentage of form submitters select a lender versus leave without selecting?",w:"Defines the actual scale of the drop-off problem and whether it is getting worse, which determines how urgently the email capture gap needs to be addressed."},
+    {q:"What is the breakdown of members by loan purpose, buyer type, and loan size?",w:"A first-time buyer on a $300K purchase and someone refinancing a $700K home require completely different messages. Without this breakdown, personalization is impossible."},
+    {q:"How long does the average member spend on the offers page before leaving?",w:"From my site audit, I read the consent language carefully and hesitated. Under 30 seconds signals distraction. Over two minutes signals they read the consent language and backed out. Two different causes require two different re-engagement approaches."},
+    {q:"Where did the millions of email addresses come from — the mortgage flow or across all products?",w:"If a large portion came from credit cards or personal loans, mortgage re-engagement messaging will feel irrelevant and accelerate unsubscribes on an already damaged list."},
     {q:"What events and attributes exist in Iterable, and can form-submission data be passed in?",w:"Without loan_type, credit_score_range, and home_price as member attributes, the journey cannot be personalized regardless of how strong the strategy is."},
-    {q:"Why is the real estate agent email triggering four minutes after the confirmation?",w:"Discovered during my personal site audit. This is either intentional with no sequencing logic, or a gap no one has addressed. Either way it is contributing to unsubscribes."},
-    {q:"Where does Bankrate's communication fall off once a member has spoken to a lender?",w:"If Bankrate stops sending entirely after the transaction, that is a significant long-term retention gap. A converted member is the warmest contact for future products."}
+    {q:"What is the full sequencing logic behind the existing triggered sends — and is any of it connected to lender data?",w:"From my site audit: I received a re-engagement email on Thursday saying 'you should be hearing from Tomo soon' but Tomo had already contacted me on Wednesday. The sends are firing with no awareness of what the lender has done. That is a data trigger disconnect, not just a timing issue."},
+    {q:"Is there any data sharing between Bankrate and lenders after the member is handed off?",w:"The Thursday email proved there is not. Bankrate's system has no visibility into whether the lender has made contact. Without this data feed, re-engagement sends will keep firing into active lender conversations and suppression cannot work."},
+    {q:"Where does Bankrate's communication fall off once a member has spoken to a lender?",w:"If Bankrate stops sending entirely after the transaction, that is a significant long-term retention gap. A member who went through the mortgage process with Bankrate's help is the warmest contact for refinancing, home equity, or other financial products."}
   ];
   return <div>
     <H>Questions That Would Inform My Approach</H>
-    <p style={{fontSize:12,color:C.muted,marginBottom:14,fontStyle:"italic"}}>I do not build in a vacuum. Every question below directly changes a strategic or technical decision.</p>
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9}}>
       {qs.map((item,i)=><Card key={i} style={{padding:"10px 13px"}}>
         <div style={{fontSize:12,fontWeight:700,marginBottom:5,lineHeight:1.4}}>{i+1}. {item.q}</div>
@@ -155,7 +176,12 @@ function Questions() {
 }
 
 function Priorities() {
-  const ps = [{n:"1",color:C.accent,title:"High-Intent Recent Drop-Offs",desc:"Completed full form, saw offers, left without selecting within last 24 hours. Gave Bankrate their full financial profile. Proof of concept starts here."},{n:"2",color:C.teal,title:"Return Visitors",desc:"Came back a second time or more but still have not selected a lender. Higher intent signal. Messaging acknowledges their return."},{n:"3",color:C.purple,title:"ML High-Propensity Members",desc:"Longer time on offers page, multiple lenders reviewed, higher credit score and loan amount. Propensity model built on behavioral signals. Condensed journey, faster timing."},{n:"4",color:C.green,title:"On-the-Fence Members",desc:"Lower propensity score but site activity within last seven days. Test lower-commitment value exchange. RESPA compliance review required."}];
+  const ps = [
+    {n:"1",color:C.accent,title:"High-Intent Recent Drop-Offs",why:"Why first:",whytext:"Completed the full form and saw personalized offers. The drop-off was hesitation, not disinterest. No targeting model needed — behavioral intent is already proven.",desc:"Completed full form, saw offers, left without selecting within last 24 hours."},
+    {n:"2",color:C.teal,title:"Return Visitors",why:"Why second:",whytext:"They came back on their own. Self-selection is a stronger intent signal than any model score. They are still actively shopping and already familiar with Bankrate.",desc:"Came back a second time or more but still have not selected a lender."},
+    {n:"3",color:C.purple,title:"ML High-Propensity Members",why:"Why third:",whytext:"Behavioral signals predict conversion before the member signals intent explicitly. Starting thresholds (720 credit score, $350K loan) are directional hypotheses — not hard rules. Validated by analyzing Bankrate's historical lender selection data with the data science team. If members with these characteristics are not using Bankrate at scale, the model will show that and thresholds get adjusted.",desc:"Time on offers page, multiple lenders reviewed, credit score range, loan amount. Condensed journey, faster timing."},
+    {n:"4",color:C.green,title:"On-the-Fence Members",why:"Why fourth:",whytext:"Direct lender CTA has not worked for this segment. The strategy shifts to a lower-commitment value exchange to keep them in the Bankrate ecosystem until they are ready.",desc:"Lower propensity score but site activity within last seven days. Test rate alert subscription or mortgage readiness guide. RESPA compliance review required."}
+  ];
   return <div>
     <H>Who I Would Target First and Why</H>
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
@@ -164,7 +190,9 @@ function Priorities() {
           <div style={{width:28,height:28,borderRadius:"50%",background:p.color,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:800,flexShrink:0}}>{p.n}</div>
           <div style={{fontSize:13,fontWeight:700}}>{p.title}</div>
         </div>
-        <p style={{margin:0,fontSize:12,lineHeight:1.5,color:C.muted}}>{p.desc}</p>
+        <div style={{fontSize:10,fontWeight:800,color:p.color,marginBottom:3,textTransform:"uppercase",letterSpacing:1}}>{p.why}</div>
+        <p style={{margin:"0 0 8px",fontSize:11,lineHeight:1.5,color:C.muted,fontStyle:"italic"}}>{p.whytext}</p>
+        <p style={{margin:0,fontSize:12,lineHeight:1.5,color:C.text}}>{p.desc}</p>
       </Card>)}
     </div>
     <Card style={{borderLeft:`3px solid ${C.danger}`,background:"rgba(239,68,68,0.04)",padding:"10px 14px"}}>
@@ -175,10 +203,15 @@ function Priorities() {
 }
 
 function Guardrails() {
-  const items = [{title:"Unsubscribe rate",color:C.warning,desc:"Spike after any step means the message is out of context for that segment. Isolate which step, which audience, and adjust before continuing the send."},{title:"Inbox placement rate",color:C.accent,desc:"Drop in primary inbox routing reduces open rate and click rate on every send that follows. Monitor per send, not per campaign."},{title:"Spam complaint rate",color:C.danger,desc:"Any spike gets investigated immediately. Gmail and Outlook factor complaint rate directly into domain reputation scoring."},{title:"Lender quality signals",color:C.teal,desc:"Are lifecycle-converted members engaging with lenders or going silent post-contact? Low engagement signals the journey is optimizing for clicks, not qualified intent."},{title:"Compliance",color:C.purple,desc:"All mortgage lifecycle communications reviewed by legal against RESPA, TILA, and CAN-SPAM before any send goes live."}];
+  const items = [
+    {title:"Unsubscribe rate",color:C.warning,desc:"The list already has more unsubscribes than clicks from batch-blast history. One poorly sequenced send on a damaged list does more harm than starting from zero. Spike after any step: isolate which step, which audience, and stop before continuing."},
+    {title:"Inbox placement rate",color:C.accent,desc:"Every Bankrate email in my site audit landed in promotions. Tomo's broken-image email landed in primary. This is not hypothetical — it is already happening. A drop in primary routing compounds with every send that follows. Monitor per send, not per campaign."},
+    {title:"Spam complaint rate",color:C.danger,desc:"Any spike gets investigated immediately. Gmail and Outlook factor complaint rate directly into domain reputation scoring. With a list this large and this damaged, a complaint spike can affect deliverability across the entire program."},
+    {title:"Lender quality signals",color:C.teal,desc:"I received a Bankrate re-engagement email after Tomo had already contacted me. That is the program converting members who are not actually ready. Low post-contact lender engagement signals the journey is optimizing for clicks, not qualified intent."},
+    {title:"Compliance",color:C.purple,desc:"All mortgage lifecycle communications reviewed by legal against RESPA, TILA, and CAN-SPAM before any send goes live. Incentive-based messaging requires additional RESPA review."}
+  ];
   return <div>
     <H>Guardrails</H>
-    <p style={{fontSize:12,color:C.muted,marginBottom:16,fontStyle:"italic"}}>These are the signals that tell me something is wrong before it becomes a program-level problem.</p>
     <div style={{display:"flex",flexDirection:"column",gap:12}}>
       {items.map((item,i)=><Card key={i} style={{display:"flex",gap:16,alignItems:"flex-start",borderLeft:`3px solid ${item.color}`}}>
         <div style={{flexShrink:0,minWidth:160}}><div style={{fontSize:12,fontWeight:800,color:item.color}}>{item.title}</div></div>
@@ -189,28 +222,114 @@ function Guardrails() {
 }
 
 function Ecosystem() {
-  const stages = [{name:"Pre-Submission",color:C.accent,items:["Browse abandonment (visit, no form start within 15 min)","Rate alert nurture with cross-sell to build brand familiarity","Lead capture nurture via mid-form save and exit intent modal"]},{name:"Post-Submission",color:C.teal,items:["High-intent drop-off re-engagement (Part 1)","Pre-lender contact nurture with personalized content blocks","Post-lender-selection bridge email with actual rate and APR","Lender non-response (72 hours, no lender contact)"]},{name:"Active Pipeline",color:C.purple,items:["Rate movement alerts tied to member loan profile","Cross-product behavior triggers replacing batch sends","Multi-lender awareness for non-selected lenders"]},{name:"Win-Back and Long-Term",color:C.green,items:["30/60/90-day win-back program","Rate alert subscription as re-entry point","12-month refinance consideration trigger","Referral program (pending compliance review)"]}];
+  const stages = [
+    {name:"Pre-Submission",color:C.accent,items:[
+      {j:"Browse abandonment",t:"Trigger: mortgage page visited, no form started within 15 min"},
+      {j:"Rate alert nurture with cross-sell to build brand familiarity",t:"Trigger: rate alert sign-up, no form submitted"},
+      {j:"Lead capture nurture via mid-form save and exit intent modal",t:"Trigger: email captured mid-form, no form completed"}
+    ]},
+    {name:"Post-Submission",color:C.teal,items:[
+      {j:"High-intent drop-off re-engagement (Part 1)",t:"Trigger: form completed, no lender selected within 30 min"},
+      {j:"Pre-lender contact nurture with personalized content blocks",t:"Trigger: lender selected, lender has not yet made contact"},
+      {j:"Post-lender-selection bridge email with actual rate and APR",t:"Trigger: lender selected — fires immediately before lender reaches inbox"},
+      {j:"Lender non-response",t:"Trigger: lender selected, no lender contact signal after 72 hours"}
+    ]},
+    {name:"Active Pipeline",color:C.purple,items:[
+      {j:"Rate movement alerts tied to member loan profile",t:"Trigger: rate shift above threshold against member's specific loan profile"},
+      {j:"Cross-product behavior triggers replacing batch sends",t:"Trigger: product page viewed — credit card, personal loan, home equity, deposits"},
+      {j:"Multi-lender awareness for non-selected lenders",t:"Trigger: lender selected — surfaces content on lenders member viewed but did not choose"}
+    ]},
+    {name:"Win-Back and Long-Term",color:C.green,items:[
+      {j:"30/60/90-day win-back program",t:"Trigger: no site activity or engagement after 30, 60, 90 days"},
+      {j:"Rate alert subscription as re-entry point",t:"Trigger: 60-day inactive, offer lower-commitment re-entry"},
+      {j:"12-month refinance consideration trigger",t:"Trigger: 12 months post lender_selected, no return visit"},
+      {j:"Referral program (pending compliance review)",t:"Trigger: 6 months post lender_selected"}
+    ]}
+  ];
   return <div>
     <H>Lifecycle Journey Ecosystem</H>
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
       {stages.map((s,i)=><Card key={i} style={{borderTop:`3px solid ${s.color}`}}>
         <Lbl color={s.color}>{s.name}</Lbl>
-        <div style={{display:"flex",flexDirection:"column",gap:6}}>
-          {s.items.map((item,k)=><div key={k} style={{fontSize:12,display:"flex",gap:8,lineHeight:1.4}}><span style={{color:s.color,flexShrink:0,fontWeight:700}}>+</span>{item}</div>)}
+        <div style={{display:"flex",flexDirection:"column",gap:8}}>
+          {s.items.map((item,k)=><div key={k}>
+            <div style={{fontSize:12,display:"flex",gap:8,lineHeight:1.4,marginBottom:2}}><span style={{color:s.color,flexShrink:0,fontWeight:700}}>+</span><span style={{fontWeight:600}}>{item.j}</span></div>
+            <div style={{fontSize:10,color:C.muted,paddingLeft:16,lineHeight:1.3,fontStyle:"italic"}}>{item.t}</div>
+          </div>)}
         </div>
       </Card>)}
     </div>
   </div>;
 }
 
+function TopOfFunnel() {
+  const captures = [
+    {method:"Mid-Form Save Prompt",desc:"A 'Save your results' CTA appears before the member reaches the offers page. Captures email before they ever see the consent language."},
+    {method:"Exit Intent Modal",desc:"When a member moves to leave the offers page: 'Not ready to connect with a lender? Enter your email and we will save your results.' Captures the drop-off at the exact moment it happens."},
+    {method:"Rate Alert CTA",desc:"A secondary option alongside the Continue button: 'Not ready to select a lender? Get notified when rates change.' Captures email without requiring lender selection or consent."}
+  ];
+  const nurture = [
+    "Member enters rate alert nurture — education-first, no hard sell",
+    "Journey introduces smaller Bankrate products (credit cards, personal loans, CDs) to build brand familiarity",
+    "Every interaction builds the member profile: what they browse, what they engage with, what rate movements get attention",
+    "Behavioral data collected feeds personalization of all future mortgage comms",
+    "Member converts on cross-sell product: enters that product journey with mortgage awareness woven throughout",
+    "When member returns ready for the mortgage, they already know Bankrate — re-engagement converts at a higher rate"
+  ];
+  return <div>
+    <H>Before the Journey Starts: Top of Funnel</H>
+    <p style={{fontSize:13,color:C.muted,marginBottom:16,lineHeight:1.5}}>The re-engagement journey in Part 1 only reaches members whose email was captured. Most drop-offs leave before giving it. This is the strategy for capturing email and building behavioral data before any journey fires.</p>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+      <div>
+        <Lbl color={C.accent}>Three Email Capture Mechanisms</Lbl>
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {captures.map((c,i)=><Card key={i} style={{borderLeft:`3px solid ${C.accent}`}}>
+            <div style={{fontSize:12,fontWeight:800,color:C.accentLight,marginBottom:5}}>{c.method}</div>
+            <p style={{margin:0,fontSize:12,lineHeight:1.5,color:C.text}}>{c.desc}</p>
+          </Card>)}
+        </div>
+      </div>
+      <div>
+        <Lbl color={C.teal}>What Happens After Capture</Lbl>
+        <div style={{display:"flex",flexDirection:"column",gap:7}}>
+          {nurture.map((n,i)=><div key={i} style={{display:"flex",gap:8,fontSize:12,lineHeight:1.4}}>
+            <span style={{color:C.teal,flexShrink:0,fontWeight:700}}>+</span>
+            <span style={{color:C.text}}>{n}</span>
+          </div>)}
+        </div>
+        <Card style={{marginTop:12,background:"rgba(8,145,178,0.08)",border:`1px solid ${C.teal}`,padding:"10px 13px"}}>
+          <p style={{margin:0,fontSize:12,lineHeight:1.5,fontStyle:"italic",color:C.text}}>Most candidates start at the drop-off. This strategy starts one step earlier — building the foundation that makes re-engagement possible at scale.</p>
+        </Card>
+      </div>
+    </div>
+  </div>;
+}
+
 function Journey() {
-  const steps = [{s:"1",t:"1 hour",ch:"Email",p:"Surface rate, APR, monthly payment. Low-pressure return CTA."},{s:"2",t:"Day 1",ch:"Email",p:"Educate on evaluating lenders. Bankrate as consumer advocate."},{s:"3",t:"Day 3",ch:"Email",p:"Rate movement alert. Genuine urgency."},{s:"4",t:"Day 5",ch:"Email",p:"Address consent hesitation. Clicking through is a conversation, not a commitment."},{s:"5",t:"Day 7",ch:"SMS or Email",p:"Short direct close. Direct link. Zero friction."},{s:"14",t:"Day 14",ch:"Email",p:"Rate alert subscription offer for zero-engagement members only."}];
-  const branching = ["After every step: lender selected? Exit as converted. No? Continue.","After Step 1: opened but no click? Route Step 2 toward education via Yes/No split on email_open event.","Zero opens and clicks across Steps 1 to 3: route to Day 14 only.","Priority 3 high-propensity members: Steps 1 and 2 within 6 hours, not 24."];
+  const steps = [
+    {s:"1",t:"1 hour",ch:"Email",p:"Iterable dynamic content blocks pull the member's actual rate, APR, and monthly payment from their session data. No generic copy. Clicking through is a conversation, not a commitment."},
+    {s:"2",t:"Day 1",ch:"Email",p:"Rate vs. APR, what points mean, what to ask a lender. Position Bankrate as the consumer's advocate."},
+    {s:"3",t:"Day 3",ch:"Email",p:"Rate movement alert. Rates shift daily — the offers from their session may have changed."},
+    {s:"4",t:"Day 5",ch:"Email",p:"Address consent hesitation directly. No obligation to apply, no credit impact, no requirement to choose the first caller."},
+    {s:"5",t:"Day 7",ch:"SMS or Email",p:"Short direct close. Direct link. Zero friction. SMS for opted-in members only."},
+    {s:"14",t:"Day 14",ch:"Email",p:"Rate alert subscription offer for zero-engagement members only. Lower-commitment re-entry."}
+  ];
+  const branching = [
+    "Lender selected at any point: exit as converted.",
+    "Step 1 opened, no click: route Step 2 toward education via Yes/No split on email_open event in Iterable.",
+    "Zero opens and clicks across Steps 1 to 3: route to Day 14 only.",
+    "Priority 3 high-propensity members: Steps 1 and 2 within 6 hours, not 24.",
+    "Member converts on cross-sell product: exit to cross-product journey with mortgage awareness woven throughout."
+  ];
   return <div>
     <H>Part 1: Journey Architecture</H>
+    <Card style={{marginBottom:12,padding:"9px 13px",background:"rgba(239,68,68,0.06)",border:`1px solid ${C.danger}`}}>
+      <span style={{fontSize:10,fontWeight:800,color:C.danger,letterSpacing:1.5,textTransform:"uppercase",marginRight:8}}>Prerequisite:</span>
+      <span style={{fontSize:12,color:C.text}}>Email must be captured before the Continue step. Without this, most drop-offs are unreachable. See Top of Funnel slide for the three capture mechanisms that feed this journey.</span>
+    </Card>
     <Card style={{marginBottom:12,padding:"9px 13px",background:C.cardAlt}}>
       <span style={{fontSize:10,fontWeight:800,color:C.accent,letterSpacing:1.5,textTransform:"uppercase",marginRight:8}}>Entry Trigger:</span>
-      <code style={{fontSize:11,color:C.accentLight}}>`rate_comparison_completed = true` AND no `lender_selected` within 30 min</code>
+      <code style={{fontSize:11,color:C.accentLight}}>{'`rate_comparison_completed = true` AND no `lender_selected` within 30 min'}</code>
     </Card>
     <div style={{overflowX:"auto",marginBottom:12}}>
       <table style={{width:"100%",fontSize:12}}>
@@ -231,21 +350,25 @@ function Journey() {
 }
 
 function Experiment() {
-  const rules = [{o:"Treatment wins",a:"Roll to 100% of journey entrants. Apply personalization to Steps 2 through 5. Queue next test."},{o:"Control wins or flat",a:"Move to next variable: timing, subject line, or post-click landing page."},{o:"Inconclusive at 30 days",a:"Call it a draw. Document and move on."}];
+  const rules = [
+    {o:"Treatment wins",a:"Roll to 100% of journey entrants. Apply personalization to Steps 2 through 5. Queue next test."},
+    {o:"Control wins or flat",a:"Move to next variable: timing, subject line, or post-click landing page."},
+    {o:"Inconclusive at 30 days",a:"Call it a draw. Document and move on."}
+  ];
   return <div>
     <H>Part 2: Experimentation Design</H>
     <Card accent={C.accent} style={{marginBottom:12}}>
       <Lbl color={C.accent}>Hypothesis</Lbl>
-      <p style={{margin:0,fontSize:13,lineHeight:1.6}}>Members who receive a re-engagement email surfacing their specific rate, APR, and monthly payment will convert to lender selection at a higher rate than members who receive a generic offer reminder.</p>
+      <p style={{margin:0,fontSize:13,lineHeight:1.6}}>The current program sends the same generic message to every drop-off regardless of where they are in their decision. Surfacing the member's actual rate, APR, and monthly payment gives them new information they did not have — and tests whether personalization drives lender selection on a program that has never been personalized before.</p>
     </Card>
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
       <Card><Lbl color={C.muted}>Control</Lbl><p style={{margin:0,fontSize:12,lineHeight:1.5,color:C.muted}}>General offer description.<br/><strong style={{color:C.text}}>CTA:</strong> "View your personalized rate offers."</p></Card>
-      <Card accent={C.accent}><Lbl color={C.accent}>Treatment</Lbl><p style={{margin:0,fontSize:12,lineHeight:1.5}}>Best match surfaced: rate, APR, loan type, monthly payment.<br/><strong>CTA:</strong> "Your top match: 5.99% APR. See all [X] offers."</p></Card>
+      <Card accent={C.accent}><Lbl color={C.accent}>Treatment</Lbl><p style={{margin:0,fontSize:12,lineHeight:1.5}}>Member's best match surfaced: rate, APR, loan type, monthly payment.<br/><strong>CTA:</strong> "Your top match: 5.99% APR. See all [X] offers."</p></Card>
     </div>
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
       <Card style={{background:C.cardAlt}}>
         <Lbl color={C.accentLight}>Holdout</Lbl>
-        <p style={{margin:0,fontSize:11,color:C.muted,lineHeight:1.5}}>10% global holdout withheld from ALL journey comms across the program. Organic conversion rate is the true baseline. Applied at Chime where platform numbers consistently overstated incremental impact.</p>
+        <p style={{margin:0,fontSize:11,color:C.muted,lineHeight:1.5}}>10% global holdout withheld from ALL journey comms across the program. Organic conversion rate is the true baseline. Applied at Chime where platform numbers consistently overstated incremental impact. This holdout does not exist at Bankrate today — it must be built before the first send.</p>
       </Card>
       <Card style={{background:C.cardAlt}}>
         <Lbl color={C.accentLight}>Metric and Runtime</Lbl>
@@ -268,14 +391,34 @@ function Experiment() {
 }
 
 function Attribution() {
-  const def = ["Member was enrolled in the journey (matched in Iterable send data)","Member clicked a link in a lifecycle email. Open alone does not qualify.","Lender selection occurred within 24 hours of that email click","Member is NOT in the holdout group","One conversion counted per member per journey enrollment"];
-  const sources = [{s:"Long conversion windows",c:"24-hour window only. 7 to 30-day defaults capture organic conversions."},{s:"No holdout baseline",c:"10% global holdout established before first send."},{s:"View-through attribution",c:"Click-only qualifying touchpoints. Opens do not count."},{s:"Duplicate attribution",c:"One conversion per member per journey, not per send."},{s:"Bot traffic",c:"Click velocity and user-agent filtering before data enters the model."}];
-  const tbl = [{m:"Iterable-reported lender selections",v:"X",color:C.muted},{m:"Internally validated conversions (24-hr click window)",v:"Y",color:C.text},{m:"Holdout-validated incremental conversions",v:"Z",color:C.success}];
+  const def = [
+    "Member was enrolled in the journey (matched in Iterable send data)",
+    "Member clicked a link in a lifecycle email. Open alone does not qualify.",
+    "Lender selection occurred within 24 hours of that email click",
+    "Member is NOT in the holdout group",
+    "One conversion counted per member per journey enrollment"
+  ];
+  const sources = [
+    {s:"Long conversion windows",c:"24-hour window only. 7 to 30-day defaults capture organic conversions."},
+    {s:"No holdout baseline",c:"10% global holdout established before first send. Does not exist at Bankrate today."},
+    {s:"View-through attribution",c:"Click-only qualifying touchpoints. Opens do not count."},
+    {s:"Duplicate attribution",c:"One conversion per member per journey, not per send."},
+    {s:"Bot traffic",c:"Click velocity and user-agent filtering before data enters the model."}
+  ];
+  const tbl = [
+    {m:"Iterable-reported lender selections",v:"X",color:C.muted},
+    {m:"Internally validated conversions (24-hr click window)",v:"Y",color:C.text},
+    {m:"Holdout-validated incremental conversions",v:"Z",color:C.success}
+  ];
   return <div>
     <H>Part 3: Attribution Framework</H>
+    <Card style={{marginBottom:14,background:"rgba(239,68,68,0.06)",border:`1px solid ${C.danger}`,padding:"10px 13px"}}>
+      <span style={{fontSize:10,fontWeight:800,color:C.danger,letterSpacing:1.5,textTransform:"uppercase",marginRight:8}}>Important:</span>
+      <span style={{fontSize:12,color:C.text}}>This framework does not exist at Bankrate today. Nothing has been tested, no holdout exists, and platform attribution has never been validated internally. Everything below needs to be built before the program launches — not after.</span>
+    </Card>
     <div style={{display:"grid",gridTemplateColumns:"5fr 6fr",gap:14}}>
       <div>
-        <Lbl color={C.accent}>Attributed Conversion -- All 5 Required</Lbl>
+        <Lbl color={C.accent}>Attributed Conversion — All 5 Required</Lbl>
         <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:14}}>
           {def.map((d,i)=><div key={i} style={{display:"flex",gap:8,fontSize:12,lineHeight:1.4}}><span style={{color:C.success,fontWeight:800,flexShrink:0}}>{i+1}.</span><span>{d}</span></div>)}
         </div>
@@ -302,11 +445,19 @@ function Attribution() {
 }
 
 function BigBet() {
-  const fixes = ["Pull rate, APR, monthly payment, and lender name into the confirmation email body dynamically via Iterable personalization fields","Replace the product navigation grid with one CTA back to the member's saved results","Move to minimal HTML or plain text. The current template is why Bankrate lands in promotions while the lender's broken-image email lands in primary.","Move the real estate agent email to Day 3 or Day 5 of the re-engagement journey. Not four minutes after submission.","Build the events and attributes library. Without loan_type, buyer_type, credit_score_range, and home_price as member attributes in Iterable, every message is generic by default.","Own the window between lender selection and first lender contact. Use content blocks personalized to the selected lender AND the lenders the member viewed but did not choose."];
+  const fixes = [
+    "Pull rate, APR, monthly payment, and lender name into the confirmation email body dynamically via Iterable's personalization fields",
+    "Replace the product navigation grid with one CTA back to the member's saved results",
+    "Move to minimal HTML or plain text. Proven by experience: every Bankrate email in my site audit landed in promotions. Tomo's email — flagged as suspicious by Gmail with broken images — landed in primary because it contained personalized transactional data.",
+    "Move the real estate agent email to Day 3 or Day 5 of the re-engagement journey. Not four minutes after submission.",
+    "Build the events and attributes library. Without loan_type, buyer_type, credit_score_range, and home_price as member attributes in Iterable, every message is generic by default.",
+    "Own the window between lender selection and first lender contact. Proven by experience: I received a Bankrate re-engagement email on Thursday saying 'you should be hearing from Tomo soon' — Tomo had already contacted me on Wednesday. Use content blocks personalized to the selected lender AND the lenders the member viewed but did not choose.",
+    "Build the lender data connection. Without a data feed or webhook from the lender outreach system, Bankrate has no visibility into whether the lender has made contact. Re-engagement sends will keep firing into active lender conversations. Suppression logic cannot work without this."
+  ];
   return <div>
     <H>The Big Bet: Transform What Exists</H>
     <Card style={{marginBottom:16,background:"rgba(26,107,204,0.08)",border:`1px solid ${C.accent}`,padding:"14px 16px"}}>
-      <p style={{margin:0,fontSize:14,lineHeight:1.7,fontStyle:"italic"}}>The 9:14 PM confirmation email has the right instinct. Wrong execution. The fix is not to build something new. It is to transform what already exists.</p>
+      <p style={{margin:0,fontSize:14,lineHeight:1.7,fontStyle:"italic"}}>The 9:14 PM confirmation email has the right instinct. Wrong execution. The fix is not to build something new. It is to transform what already exists — and stop what is actively making things worse.</p>
     </Card>
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9}}>
       {fixes.map((f,i)=><Card key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"11px 13px"}}>
@@ -318,11 +469,41 @@ function BigBet() {
 }
 
 function KPIs() {
-  const stages = [{name:"Stage 1: No Email Captured Yet",color:C.accent,kpis:[{p:"Primary",m:"Rate alert sign-up rate from site visitors who do not submit the mortgage form"},{p:"Primary",m:"Email capture rate from exit intent modal and mid-form save prompt"},{p:"Secondary",m:"Rate alert nurture open rate, click rate, and cross-sell conversion rate"},{p:"Tertiary",m:"Time from rate alert sign-up to mortgage form submission"}]},{name:"Stage 2: Email Captured, Pre-Application",color:C.teal,kpis:[{p:"Primary",m:"Incremental lender selection rate vs. holdout"},{p:"Primary",m:"Click-through-to-lender rate by journey step"},{p:"Secondary",m:"Inbox placement rate: primary vs. promotions per send"},{p:"Secondary",m:"Unsubscribe rate by journey step"},{p:"Tertiary",m:"Application start rate (requires lender data sharing)"}]},{name:"Stage 3: Post-Application and Long-Term",color:C.green,kpis:[{p:"Primary",m:"Win-back rate for members inactive 60-plus days"},{p:"Primary",m:"Re-engagement rate for post-lender-conversation members"},{p:"Secondary",m:"Cross-sell conversion rate post-mortgage"},{p:"Tertiary",m:"Member still engaging with Bankrate 6 to 12 months post-conversion"}]}];
-  const cadence = [{t:"24 hours",f:"Delivery, opens, early clicks, entry volume"},{t:"3 days",f:"Lender selection, cross-sell conversions, unsubscribes"},{t:"7 days",f:"Full CTR by step, holdout baseline check"},{t:"30 days",f:"Incrementality vs. holdout, cross-reference internal data"},{t:"Monthly",f:"Downstream conversion, propensity model, win-back"}];
+  const stages = [
+    {name:"Stage 1: No Email Captured Yet",color:C.accent,kpis:[
+      {p:"Primary",m:"Rate alert sign-up rate from site visitors who do not submit the mortgage form"},
+      {p:"Primary",m:"Email capture rate from exit intent modal and mid-form save prompt"},
+      {p:"Secondary",m:"Rate alert nurture open rate, click rate, and cross-sell conversion rate"},
+      {p:"Tertiary",m:"Time from rate alert sign-up to mortgage form submission"}
+    ]},
+    {name:"Stage 2: Email Captured, Pre-Application",color:C.teal,kpis:[
+      {p:"Primary",m:"Incremental lender selection rate vs. holdout"},
+      {p:"Primary",m:"Click-through-to-lender rate by journey step"},
+      {p:"Secondary",m:"Inbox placement rate: primary vs. promotions per send"},
+      {p:"Secondary",m:"Unsubscribe rate by journey step"},
+      {p:"Tertiary",m:"Application start rate (requires lender data sharing)"}
+    ]},
+    {name:"Stage 3: Post-Application and Long-Term",color:C.green,kpis:[
+      {p:"Primary",m:"Win-back rate for members inactive 60-plus days"},
+      {p:"Primary",m:"Re-engagement rate for post-lender-conversation members"},
+      {p:"Secondary",m:"Cross-sell conversion rate post-mortgage"},
+      {p:"Tertiary",m:"Member still engaging with Bankrate 6 to 12 months post-conversion"}
+    ]}
+  ];
+  const cadence = [
+    {t:"24 hours",f:"Delivery, opens, early clicks, entry volume"},
+    {t:"3 days",f:"Lender selection, cross-sell conversions, unsubscribes"},
+    {t:"7 days",f:"Full CTR by step, holdout baseline check"},
+    {t:"30 days",f:"Incrementality vs. holdout, cross-reference internal data"},
+    {t:"Monthly",f:"Downstream conversion, propensity model, win-back"}
+  ];
   const pc = {Primary:C.accent,Secondary:C.teal,Tertiary:C.muted};
   return <div>
     <H>How I Would Measure Success</H>
+    <Card style={{marginBottom:14,background:"rgba(245,158,11,0.05)",border:`1px solid ${C.warning}`,padding:"10px 13px"}}>
+      <span style={{fontSize:10,fontWeight:800,color:C.warning,letterSpacing:1.5,textTransform:"uppercase",marginRight:8}}>First Step:</span>
+      <span style={{fontSize:12,color:C.text}}>Establish what Bankrate currently tracks as baseline. There is no benchmark data. Every metric starts from zero. Slack alerts configured on Day 1 for unsubscribe spikes, entry volume drops, and inbox placement degradation.</span>
+    </Card>
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:14}}>
       {stages.map((s,i)=><Card key={i} style={{borderTop:`3px solid ${s.color}`,padding:"12px"}}>
         <Lbl color={s.color}>{s.name}</Lbl>
@@ -345,7 +526,30 @@ function KPIs() {
 }
 
 function Roadmap() {
-  const phases = [{p:"Phase 1",title:"Diagnose and Clean Up",t:"Weeks 1 to 4",color:C.accent,items:["Audit email list: hard bounces, chronically disengaged contacts","Audit Iterable events and attributes. Build the library if incomplete.","Establish holdout baselines before any send launches","Suppress 60-plus-day inactive members. Build re-permission flow.","Assess sender reputation and domain health"]},{p:"Phase 2",title:"Quick Wins",t:"Weeks 5 to 12",color:C.teal,items:["Transform confirmation email: personalized rate data, remove product grid","Fix sequencing: move real estate agent content to Day 3 or Day 5","Transition non-mortgage sends from batch to behavior-triggered automations","Launch re-engagement journey for Priority 1 drop-offs","Run A/B test on personalized rate callout vs. generic CTA. 30-day window."]},{p:"Phase 3",title:"Personalization and Scale",t:"Month 3 and Beyond",color:C.purple,items:["Deploy propensity model for Priority 3 targeting with condensed journey","Expand personalization by buyer type, loan type, and credit score tier","Launch 30/60/90-day win-back program starting with rate alert as re-entry","Explore referral program viability and compliance pathway","Report Phase 1 and 2 results with attribution-validated numbers"]}];
+  const phases = [
+    {p:"Phase 1",title:"Diagnose and Clean Up",t:"Weeks 1 to 4",color:C.accent,items:[
+      "Fix email capture infrastructure first — without this, the re-engagement journey cannot reach the majority of the drop-off pool",
+      "Stop the existing sends that are damaging the list before adding new ones",
+      "Audit Iterable events and attributes. Build the events and attributes library if incomplete.",
+      "Establish holdout baselines before any send launches",
+      "Suppress 60-plus-day inactive members. Build re-permission flow.",
+      "Assess sender reputation and domain health"
+    ]},
+    {p:"Phase 2",title:"Quick Wins",t:"Weeks 5 to 12",color:C.teal,items:[
+      "Launch the three email capture mechanisms: rate alert CTA, exit intent modal, mid-form save prompt",
+      "Transform confirmation email: personalized rate data, remove product grid, fix inbox placement",
+      "Fix sequencing: move real estate agent content to Day 3 or Day 5",
+      "Launch re-engagement journey for Priority 1 drop-offs",
+      "Run A/B test on personalized rate callout vs. generic CTA. 30-day minimum window."
+    ]},
+    {p:"Phase 3",title:"Personalization and Scale",t:"Month 3 and Beyond",color:C.purple,items:[
+      "Build the lender data connection — the unlock that makes suppression logic work and stops re-engagement firing into active lender conversations",
+      "Deploy propensity model for Priority 3 targeting with condensed journey",
+      "Expand cross-product journeys with full mortgage nurture integration",
+      "Launch 30/60/90-day win-back program starting with rate alert as re-entry point",
+      "Report Phase 1 and 2 results with attribution-validated numbers and two-quarter roadmap"
+    ]}
+  ];
   return <div>
     <H>Path Forward</H>
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:14}}>
@@ -372,12 +576,14 @@ function App() {
     if(t==="cover") return <Cover/>;
     if(t==="approach") return <Approach/>;
     if(t==="noticed") return <Noticed/>;
+    if(t==="validation") return <Validation/>;
     if(t==="state") return <State/>;
     if(t==="hypotheses") return <Hypotheses/>;
     if(t==="questions") return <Questions/>;
     if(t==="priorities") return <Priorities/>;
     if(t==="guardrails") return <Guardrails/>;
     if(t==="ecosystem") return <Ecosystem/>;
+    if(t==="topoffunnel") return <TopOfFunnel/>;
     if(t==="journey") return <Journey/>;
     if(t==="experiment") return <Experiment/>;
     if(t==="attribution") return <Attribution/>;
